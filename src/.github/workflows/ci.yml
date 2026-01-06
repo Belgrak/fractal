@@ -1,0 +1,28 @@
+name: Fractal CI
+
+on: [push, pull_request]
+
+jobs:
+  build-and-run:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Compile
+      run: make
+      
+    - name: Run Generator
+      run: ./fractal_gen
+      
+    - name: Verify Output
+      run: |
+        if [ ! -f mandelbrot.pgm ]; then echo "Mandelbrot missing"; exit 1; fi
+        if [ ! -f julia.pgm ]; then echo "Julia missing"; exit 1; fi
+        if [ ! -s mandelbrot.pgm ]; then echo "File is empty"; exit 1; fi
+        
+    - name: Upload Artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: fractals
+        path: "*.pgm"
