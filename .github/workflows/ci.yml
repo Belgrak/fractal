@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     
     - name: Compile
       run: make
@@ -22,7 +22,7 @@ jobs:
         if [ ! -s mandelbrot.pgm ]; then echo "File is empty"; exit 1; fi
         
     - name: Upload Artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: fractals
         path: "*.pgm"
